@@ -1,29 +1,59 @@
-import React, { useEffect, useState } from 'react';
-import { Input } from "./components/Input";
-import { Autocomplete } from "./components/Autocomplete";
-import data from "./data";
+import { Box, Card, CardContent, Grid } from "@mui/material";
+import { RouterProvider } from "react-router-dom";
+
+import { ReactComponent as BG } from './assets/svg/bg.svg';
+import router from "./router";
 
 function App() {
 
   return (
-    <div className="App bg-slate-300 font-semibold min-h-screen flex items-center justify-center text-xs">
-      <div className="p-4 bg-white flex flex-col gap-3">
-        <Input type="text" placeholder="Some text" errorMessage="Broken" />
-        <Autocomplete
-          onLoad={(value) =>
-            new Promise((res) =>
-              setTimeout(() =>
-                res(data.filter(item => item[ 0 ].includes(value))),
-                500
-              )
-            )
-          }
-          getLabel={(item) => `${item[ 0 ]} - ${item[ 1 ]} ~ ${item[ 2 ]}`}
-          onClickItem={console.log}
-          getKey={(item) => `${item[ 0 ]}`}
+    <Box
+      style={{
+        position: 'relative',
+        height: '100vh'
+      }}
+    >
+      <Box
+        display='flex'
+        alignItems='center'
+        justifyContent='center'
+        position='absolute'
+        top={0}
+        bottom={0}
+        left={0}
+        right={0}
+        zIndex={-1}
+      >
+        <BG
+          style={{
+            fill: 'conic-gradient(from 168deg at 26.05% 40.64%, #ABE1C9 8.738755658268929deg, #80CDD7 160.76123356819153deg, #7C9CE5 225.34600496292114deg, rgba(126, 163, 230, 0.22) 298.84072065353394deg, rgba(207, 238, 187, 0.88) 341.0336709022522deg)',
+            filter: 'blur(150px)',
+            width: '1150.392px',
+            height: '584px',
+          }}
         />
-      </div>
-    </div>
+      </Box>
+      <Box
+        display='flex'
+        height='100%'
+        alignItems='center'
+        justifyContent='center'
+      >
+        <Grid container justifyContent='center'>
+          <Grid item xs={12} sm={11} md={10} lg={6} >
+            <Card
+            >
+              <CardContent>
+                <Box py={4} px={8}>
+                  <RouterProvider router={router} />
+                </Box>
+              </CardContent>
+            </Card>
+          </Grid>
+        </Grid>
+      </Box>
+    </Box>
+
   );
 }
 
