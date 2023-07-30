@@ -13,7 +13,7 @@ import { Timeline } from "./common/Timeline";
 
 export const DestinationSelector = () => {
   const theme = useTheme();
-  const { control } = useFormContext<SearchFormModel>();
+  const { control, trigger } = useFormContext<SearchFormModel>();
   const {
     fields: destinations,
     append,
@@ -48,7 +48,10 @@ export const DestinationSelector = () => {
                 render={({ field: { onChange, value }, fieldState: { error } }) => (
                   <CityAutocomplete
                     label="City of origin"
-                    onItemChange={onChange}
+                    onItemChange={(item) => {
+                      onChange(item);
+                      trigger('origin');
+                    }}
                     value={value}
                     error={!!error?.message}
                     helperText={error?.message}
@@ -64,7 +67,10 @@ export const DestinationSelector = () => {
           >
             <TimelineSeparator>
               <TimelineConnector />
-              <PlaceIcon style={{ fill: theme.palette.error.main }} />
+              {index === destinations.length - 1
+                ? <PlaceIcon style={{ fill: theme.palette.error.main }} />
+                : <CircleIcon style={{ fill: theme.palette.primary.main }} />
+              }
               <TimelineConnector />
             </TimelineSeparator>
             <TimelineContent>
@@ -75,7 +81,10 @@ export const DestinationSelector = () => {
                   render={({ field: { onChange, value }, fieldState: { error } }) => (
                     <CityAutocomplete
                       label="City of destination"
-                      onItemChange={onChange}
+                      onItemChange={(item) => {
+                        onChange(item);
+                        trigger('destinations');
+                      }}
                       value={value}
                       error={!!error?.message}
                       helperText={error?.message}

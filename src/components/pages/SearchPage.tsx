@@ -1,16 +1,14 @@
-import React, { Suspense, useCallback, useEffect, useMemo } from 'react'
+import React, { useCallback, useEffect, useMemo } from 'react'
+import { Box, Button, Typography, useTheme } from "@mui/material";
 import { useSearchParams } from "react-router-dom";
-import { useLocation, useNavigate, useParams } from "react-router";
+import { useNavigate } from "react-router";
+import { format } from "date-fns";
+
 import { fetchCitiesByNames } from "../../fakeApi";
 import { CityType } from "../../models/CityType";
 import { calculateDistanceBetweenCities } from "../../utils";
-import { Box, Button, Chip, Typography, useTheme } from "@mui/material";
-import { TimelineConnector, TimelineContent, TimelineItem, TimelineOppositeContent, TimelineSeparator, timelineItemClasses } from "@mui/lab";
-
-import { Timeline } from "../common/Timeline";
 import { CalculatedDestinations } from "../CalculatedDestinations";
 import { TextLine } from "../common/TextLine";
-import { format } from "date-fns";
 
 export const SearchPage = () => {
   const theme = useTheme();
@@ -49,7 +47,6 @@ export const SearchPage = () => {
   const date = useMemo(() => {
     if (config.date) {
       const date = new Date(config.date);
-      // format date to 'Feb 14, 2023'
       return format(date, 'MMM d, yyyy');
     }
     return '';

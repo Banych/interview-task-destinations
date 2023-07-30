@@ -3,9 +3,7 @@ import { TextField, IconButton, TextFieldProps, textFieldClasses } from "@mui/ma
 import MinusIcon from '@mui/icons-material/Remove';
 import PlusIcon from '@mui/icons-material/Add';
 
-type NumberInputProps = TextFieldProps & {
-
-}
+type NumberInputProps = TextFieldProps;
 
 export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(({
   ...props

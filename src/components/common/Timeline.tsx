@@ -7,9 +7,7 @@ import {
   timelineItemClasses
 } from "@mui/lab";
 
-type TimelineProps = PropsWithChildren<MuiTimelineProps> & {
-
-}
+type TimelineProps = PropsWithChildren<MuiTimelineProps>;
 
 export const Timeline = forwardRef<HTMLUListElement, TimelineProps>(({
   children,

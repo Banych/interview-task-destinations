@@ -1,63 +1,62 @@
-import { FormProvider, useForm } from "react-hook-form"
-import { Box, Button, Grid } from "@mui/material"
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useParams, useRoutes, useNavigate } from "react-router-dom";
-
-import { SearchFormModel } from "../../models/searchForm"
-import { SearchForm } from "../SearchForm"
-import { SearchFormSchema } from "../../models/searchFormSchema";
-
+import { useEffect, useState } from "react";
+import { Typography } from "@mui/material"
 import { useSearchParams } from "react-router-dom";
+import { DeepPartial } from "react-hook-form"
+
+import { fetch, fetchCitiesByNames } from "../../fakeApi";
+import { SearchFormModel } from "../../models/searchForm"
+import { SearchView } from "../SearchView";
 
 export const HomePage = () => {
-  const navigate = useNavigate();
-  const [ searchParams, setSearchParams ] = useSearchParams();
-  const form = useForm<SearchFormModel>({
-    defaultValues: {
-      date: new Date().toISOString(),
-      passengers: 2,
-      origin: {},
-      destinations: [ {} ]
-    },
-    resolver: yupResolver<SearchFormModel>(SearchFormSchema),
-    mode: 'all',
-    criteriaMode: 'all'
-  })
-  const { handleSubmit } = form;
+  const [ searchParams ] = useSearchParams();
+  const [ defaultValues, setDefaultValues ] = useState<DeepPartial<SearchFormModel>>({});
+  const [ isLoading, setIsLoading ] = useState(true);
 
+  useEffect(() => {
+    const originName = searchParams.get('originName');
+    const destinations = searchParams.get('destinations')?.split(',');
+    const date = searchParams.get('date');
+    const passengers = searchParams.get('passengers');
 
-  const onHandleSubmit = handleSubmit((value) => {
-    console.log(value);
-    const params = new URLSearchParams();
-    params.append('originName', value.origin.name);
-    let destinations: string[] = [];
-    value.destinations.forEach((destination, index) => {
-      if (destination.name) {
-        destinations.push(destination.name);
-      }
-    });
-    params.append('destinations', destinations.join(','));
-    params.append('date', value.date);
-    params.append('passengers', value.passengers.toString());
-    navigate(`/search?${params.toString()}`);
-  });
+    const originPromise = originName ? fetch(originName) : Promise.resolve([]);
+    const destinationsPromise = destinations && destinations.length > 0 ? fetchCitiesByNames(destinations) : Promise.resolve([]);
+    const datePromise = date ? Promise.resolve(date) : Promise.resolve(undefined);
+    const passengersPromise = passengers && !isNaN(Number(passengers))
+      ? Promise.resolve(Number(passengers))
+      : Promise.resolve(undefined);
+
+    Promise.allSettled([
+      originPromise,
+      destinationsPromise,
+      datePromise,
+      passengersPromise,
+    ])
+      .then(([ origin, destinations, date, passengers ]) => {
+        const values: DeepPartial<SearchFormModel> = {};
+        if (origin.status === 'fulfilled') {
+          values.origin = origin.value[ 0 ];
+        }
+        if (destinations.status === 'fulfilled') {
+          values.destinations = destinations.value;
+        }
+        if (date.status === 'fulfilled') {
+          values.date = date.value;
+        }
+        if (passengers.status === 'fulfilled') {
+          values.passengers = passengers.value;
+        }
+        setDefaultValues(values);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, [])
 
   return (
-    <FormProvider {...form}>
-      <form onSubmit={onHandleSubmit}>
-        <Box display='flex' flexDirection='column' alignItems='center'>
-          <Box width='100%'>
-            <SearchForm />
-          </Box>
-          {JSON.stringify(form.formState.errors)}
-          <Button
-            type='submit'
-            disabled={!form.formState.isValid}
-          >
-            Submit
-          </Button>
-        </Box>
-      </form>
-    </FormProvider >
+    isLoading ? (
+      <Typography variant="h6" textAlign='center'>Loading...</Typography>
+    ) : (
+      <SearchView defaultValues={defaultValues} />
+    )
   )
 }

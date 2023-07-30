@@ -1,10 +1,11 @@
 import React from 'react';
-import { CalculationResultsType } from "../models/CalculationResults";
-import { Timeline } from "./common/Timeline";
 import { TimelineConnector, TimelineContent, TimelineItem, TimelineOppositeContent, TimelineSeparator } from "@mui/lab";
 import { Box, Chip, useTheme } from "@mui/material";
 import PlaceIcon from '@mui/icons-material/Place';
 import CircleIcon from '@mui/icons-material/CircleOutlined';
+
+import { CalculationResultsType } from "../models/CalculationResults";
+import { Timeline } from "./common/Timeline";
 
 type CalculatedDestinationsProps = {
   distances: CalculationResultsType[];

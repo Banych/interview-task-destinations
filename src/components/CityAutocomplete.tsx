@@ -1,8 +1,9 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { Autocomplete, Skeleton, TextField, TextFieldProps } from "@mui/material"
-import { CityType } from "../models/CityType"
-import { fetch } from "../fakeApi";
 import { debounce } from "lodash";
+
+import { fetch } from "../fakeApi";
+import { CityType } from "../models/CityType"
 
 type CityAutocompleteProps = Omit<TextFieldProps, 'defaultValue' | 'value'> & {
   defaultValue?: Partial<CityType>;
@@ -22,6 +23,8 @@ export const CityAutocomplete: React.FC<CityAutocompleteProps> = ({
   const [ search, setSearch ] = useState('');
   const [ items, setItems ] = useState<CityType[]>([]);
   const [ isLoading, setIsLoading ] = useState(true);
+  const [ innerError, setInnerError ] = useState(false);
+  const [ innerHelperText, setInnerHelperText ] = useState('');
 
   const onChange = useCallback((event: React.SyntheticEvent<Element, Event>, value: Partial<CityType> | string | null) => {
     onItemChange && typeof value !== 'string' && onItemChange(value)
@@ -33,11 +36,37 @@ export const CityAutocomplete: React.FC<CityAutocompleteProps> = ({
     setIsLoading(true);
   }, []);
 
+  const onBlur = useCallback(() => {
+    setInnerError(false);
+    setInnerHelperText('');
+  }, []);
+
   const debounced = useMemo(() => debounce(async () => {
-    const result = await fetch(search);
-    setIsLoading(false);
-    setItems(result)
+    try {
+      const result = await fetch(search);
+      setItems(result)
+    } catch (e: any) {
+      setInnerError(true);
+      setInnerHelperText(e);
+      console.log(e);
+    }
+    finally {
+      setIsLoading(false);
+    }
   }, 300), [ search ])
+
+  const errorMessages = useMemo(() => {
+    switch (true) {
+      case error && !innerError:
+        return helperText;
+      case !error && innerError:
+        return innerHelperText;
+      case error && innerError:
+        return `${helperText} ${innerHelperText}`;
+      default:
+        return '';
+    }
+  }, [ error, helperText, innerError, innerHelperText ]);
 
   useEffect(() => {
     debounced()
@@ -57,6 +86,7 @@ export const CityAutocomplete: React.FC<CityAutocompleteProps> = ({
       onInputChange={onInputChange}
       onChange={onChange}
       clearOnBlur
+      onBlur={onBlur}
       isOptionEqualToValue={
         (option, value) =>
           !!option && !!value && option.name === value.name
@@ -73,12 +103,12 @@ export const CityAutocomplete: React.FC<CityAutocompleteProps> = ({
           {...props}
           {...params}
           label={
-            ((items.length === 0 && search.length > 0 && !isLoading) || error)
-              ? helperText
+            (!isLoading && (error || innerError))
+              ? errorMessages
               : label
           }
           fullWidth
-          error={(items.length === 0 && search.length > 0 && !isLoading) || error}
+          error={!isLoading && (error || innerError)}
         />
       }
     />
