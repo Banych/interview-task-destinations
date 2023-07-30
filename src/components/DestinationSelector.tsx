@@ -22,8 +22,6 @@ export const DestinationSelector = () => {
     control,
   });
 
-  // const { fieldState: { error } } = useController({ control, name: 'destinations' })
-
   const onClickAddDestination = useCallback(() => {
     append({});
   }, [ append ]);
@@ -108,10 +106,19 @@ export const DestinationSelector = () => {
                     />
                   )}
                 />
-                <Tooltip title='Remove destination'>
-                  <IconButton onClick={() => onClickRemoveDestination(index)}>
-                    <RemoveIcon />
-                  </IconButton>
+                <Tooltip title={
+                  destinations.length === 1 && index === 0
+                    ? 'You cannot remove the only destination'
+                    : 'Remove destination'
+                }>
+                  <span>
+                    <IconButton
+                      onClick={() => onClickRemoveDestination(index)}
+                      disabled={destinations.length === 1 && index === 0}
+                    >
+                      <RemoveIcon />
+                    </IconButton>
+                  </span>
                 </Tooltip>
               </Box>
             </TimelineContent>

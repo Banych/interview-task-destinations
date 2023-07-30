@@ -1,7 +1,7 @@
 import data from "./data"
 import { CityType } from "../models/CityType";
 
-const fetch = (search: string) =>
+export const fetch = (search: string) =>
   new Promise<CityType[]>((res) => {
     setTimeout(() => res(
       data.filter((city =>
@@ -21,6 +21,28 @@ const fetch = (search: string) =>
           name: name
         }))
     ), 500)
-  })
+  });
 
-export default fetch;
+export const fetchCitiesByNames = (names: string[]) =>
+  new Promise<CityType[]>((res) => {
+    setTimeout(() => {
+      let cities: CityType[] = [];
+      names.forEach((name) => {
+        const city = data.find((city =>
+          city[ 0 ]
+            .toLowerCase()
+            .includes(
+              name.toLowerCase()
+            )
+        ))
+        if (city) {
+          cities.push({
+            lat: city[ 1 ],
+            lon: city[ 2 ],
+            name: city[ 0 ]
+          })
+        }
+      })
+      res(cities);
+    }, 500)
+  });

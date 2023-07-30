@@ -1,5 +1,7 @@
 import { ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { CityType } from "./models/CityType";
+import { CalculationResultsType } from "./models/CalculationResults";
 
 export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 
@@ -18,4 +20,23 @@ export const haversineDistanceBetweenPoints = (
     Math.sin(p1) * Math.sin(p2) + Math.cos(p1) * Math.cos(p2) * Math.cos(deltaLambda),
   ) * R;
   return d;
+}
+
+export const calculateDistanceBetweenCities = (cities: CityType[]): CalculationResultsType[] => {
+  return cities.reduce((acc, city, index) => {
+    const nextCity = cities[ index + 1 ];
+    if (nextCity) {
+      const distance = haversineDistanceBetweenPoints(
+        city.lat,
+        city.lon,
+        nextCity.lat,
+        nextCity.lon
+      );
+      acc.push({
+        distance,
+        cities: [ city, nextCity ]
+      })
+    }
+    return acc;
+  }, [] as CalculationResultsType[])
 }

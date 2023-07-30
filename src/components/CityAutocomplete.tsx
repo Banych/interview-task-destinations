@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { Autocomplete, Skeleton, TextField, TextFieldProps } from "@mui/material"
 import { CityType } from "../models/CityType"
-import fakeApi from "../fakeApi";
+import { fetch } from "../fakeApi";
 import { debounce } from "lodash";
 
 type CityAutocompleteProps = Omit<TextFieldProps, 'defaultValue' | 'value'> & {
@@ -34,7 +34,7 @@ export const CityAutocomplete: React.FC<CityAutocompleteProps> = ({
   }, []);
 
   const debounced = useMemo(() => debounce(async () => {
-    const result = await fakeApi(search);
+    const result = await fetch(search);
     setIsLoading(false);
     setItems(result)
   }, 300), [ search ])

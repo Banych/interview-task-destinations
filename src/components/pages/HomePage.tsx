@@ -1,12 +1,14 @@
 import { FormProvider, useForm } from "react-hook-form"
 import { Box, Button, Grid } from "@mui/material"
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useParams, useRoutes, useNavigate } from "react-router-dom";
 
 import { SearchFormModel } from "../../models/searchForm"
 import { SearchForm } from "../SearchForm"
 import { SearchFormSchema } from "../../models/searchFormSchema";
 
 export const HomePage = () => {
+  const navigate = useNavigate();
   const form = useForm<SearchFormModel>({
     defaultValues: {
       date: new Date().toISOString(),
@@ -22,6 +24,18 @@ export const HomePage = () => {
 
   const onHandleSubmit = handleSubmit((value) => {
     console.log(value);
+    const params = new URLSearchParams();
+    params.append('originName', value.origin.name);
+    let destinations: string[] = [];
+    value.destinations.forEach((destination, index) => {
+      if (destination.name) {
+        destinations.push(destination.name);
+      }
+    });
+    params.append('destinations', destinations.join(','));
+    params.append('date', value.date);
+    params.append('passengers', value.passengers.toString());
+    navigate(`/search?${params.toString()}`);
   });
 
   return (
@@ -34,7 +48,7 @@ export const HomePage = () => {
           {JSON.stringify(form.formState.errors)}
           <Button
             type='submit'
-          // disabled={!form.formState.isValid}
+            disabled={!form.formState.isValid}
           >
             Submit
           </Button>
