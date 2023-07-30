@@ -1,11 +1,20 @@
-import React, { useEffect, useMemo } from 'react'
+import React, { Suspense, useCallback, useEffect, useMemo } from 'react'
 import { useSearchParams } from "react-router-dom";
-import { useLocation, useParams } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
 import { fetchCitiesByNames } from "../../fakeApi";
 import { CityType } from "../../models/CityType";
 import { calculateDistanceBetweenCities } from "../../utils";
+import { Box, Button, Chip, Typography, useTheme } from "@mui/material";
+import { TimelineConnector, TimelineContent, TimelineItem, TimelineOppositeContent, TimelineSeparator, timelineItemClasses } from "@mui/lab";
+
+import { Timeline } from "../common/Timeline";
+import { CalculatedDestinations } from "../CalculatedDestinations";
+import { TextLine } from "../common/TextLine";
+import { format } from "date-fns";
 
 export const SearchPage = () => {
+  const theme = useTheme();
+  const navigate = useNavigate();
   const [ searchParams ] = useSearchParams();
   const [ citiesData, setCitiesData ] = React.useState<CityType[]>([]);
   const config = useMemo(() => {
@@ -37,6 +46,25 @@ export const SearchPage = () => {
     return [];
   }, [ citiesData, isSearchParamsValid ]);
 
+  const date = useMemo(() => {
+    if (config.date) {
+      const date = new Date(config.date);
+      // format date to 'Feb 14, 2023'
+      return format(date, 'MMM d, yyyy');
+    }
+    return '';
+  }, [ config.date ]);
+
+  const totalDistance = useMemo(() => {
+    return (
+      calculatedDestinations
+        .reduce((acc, curr) =>
+          acc + curr.distanceToNextCity,
+          0
+        ) / 1000
+    ).toFixed(2) + ' km';
+  }, [ calculatedDestinations ]);
+
   useEffect(() => {
     (async () => {
       if (isSearchParamsValid && config.destinations && config.originName) {
@@ -46,17 +74,62 @@ export const SearchPage = () => {
     })();
   }, [ config.destinations, config.originName, isSearchParamsValid ]);
 
+  const onClickBackButton = useCallback(() => {
+    navigate(-1);
+  }, [ navigate ])
+
   return (
-    <div>
-      SearchPage
-      <br />
-      {isSearchParamsValid ? 'valid' : 'invalid'}
-      <br />
-      {JSON.stringify(config)}
-      <br />
-      {JSON.stringify(citiesData)}
-      <br />
-      {JSON.stringify(calculatedDestinations)}
-    </div>
+    <Box display='flex' flexDirection='column' gap={5}>
+      {isSearchParamsValid ? (
+        <Box
+          display='flex'
+          flexDirection='column'
+          gap={2}
+        >
+          {citiesData.length > 0 && calculatedDestinations.length > 0 ? (
+            <>
+              <CalculatedDestinations distances={calculatedDestinations} />
+              <Box
+                display='flex'
+                flexDirection='column'
+                alignItems='center'
+                gap={2}
+              >
+                <TextLine
+                  coloredText={totalDistance}
+                  color={theme.palette.primary.light}
+                  text='is the total distance'
+                />
+                <TextLine
+                  coloredText={config.passengers || ''}
+                  color={theme.palette.primary.light}
+                  text='passengers'
+                />
+                <TextLine
+                  coloredText={date}
+                  color={theme.palette.primary.light}
+                />
+              </Box>
+            </>
+          ) : (
+            <Typography variant='h4' textAlign='center'>
+              Loading data...
+            </Typography>
+          )}
+        </Box>
+      ) : (
+        <Typography variant='h4' textAlign='center'>
+          Invalid search params
+        </Typography>
+      )}
+      <Box display='flex' justifyContent='center'>
+        <Button
+          variant='contained'
+          onClick={onClickBackButton}
+        >
+          Back
+        </Button>
+      </Box>
+    </Box>
   )
 }

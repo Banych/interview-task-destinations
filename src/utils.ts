@@ -26,16 +26,21 @@ export const calculateDistanceBetweenCities = (cities: CityType[]): CalculationR
   return cities.reduce((acc, city, index) => {
     const nextCity = cities[ index + 1 ];
     if (nextCity) {
-      const distance = haversineDistanceBetweenPoints(
+      const distanceToNextCity = haversineDistanceBetweenPoints(
         city.lat,
         city.lon,
         nextCity.lat,
         nextCity.lon
       );
       acc.push({
-        distance,
-        cities: [ city, nextCity ]
-      })
+        distanceToNextCity,
+        city: city
+      });
+    } else {
+      acc.push({
+        distanceToNextCity: 0,
+        city: city
+      });
     }
     return acc;
   }, [] as CalculationResultsType[])

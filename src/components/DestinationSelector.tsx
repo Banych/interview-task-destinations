@@ -1,7 +1,7 @@
-import React, { useCallback } from 'react'
-import { Timeline, timelineItemClasses, timelineConnectorClasses, TimelineItem, TimelineSeparator, TimelineConnector, TimelineContent, timelineClasses } from "@mui/lab";
+import { useCallback } from 'react'
+import { TimelineItem, TimelineSeparator, TimelineConnector, TimelineContent } from "@mui/lab";
 import { Box, Tooltip, IconButton, Button, useTheme } from "@mui/material";
-import { useFormContext, useFieldArray, Controller, useController } from "react-hook-form";
+import { useFormContext, useFieldArray, Controller } from "react-hook-form";
 import PlaceIcon from '@mui/icons-material/Place';
 import CircleIcon from '@mui/icons-material/CircleOutlined';
 import PlusIcon from '@mui/icons-material/AddCircleOutlineOutlined';
@@ -9,6 +9,7 @@ import RemoveIcon from '@mui/icons-material/CancelOutlined';
 
 import { SearchFormModel } from "../models/searchForm";
 import { CityAutocomplete } from "./CityAutocomplete";
+import { Timeline } from "./common/Timeline";
 
 export const DestinationSelector = () => {
   const theme = useTheme();
@@ -32,31 +33,7 @@ export const DestinationSelector = () => {
 
   return (
     <Box display='flex' flexDirection='column'>
-      <Timeline
-        sx={{
-          [ `&.${timelineClasses.root}` ]: {
-            margin: 0,
-            paddingY: 0,
-          },
-          [ `& .${timelineItemClasses.missingOppositeContent}::before` ]: {
-            flex: 0,
-            padding: 0,
-          },
-          [ `& .${timelineConnectorClasses.root}` ]: {
-            background: 'radial-gradient(ellipse at center, #b9b9b9 0%, #b9b9b9 30%, transparent 30%)',
-            backgroundRepeat: 'repeat-y',
-            backgroundPosition: 'center',
-            backgroundSize: '15px 15px',
-            width: '15px',
-          },
-          [ `& .${timelineItemClasses.root}:first-of-type .${timelineConnectorClasses.root}:first-of-type` ]: {
-            opacity: 0,
-          },
-          [ `& .${timelineItemClasses.root}:last-child .${timelineConnectorClasses.root}:last-child` ]: {
-            opacity: 0,
-          }
-        }}
-      >
+      <Timeline>
         <TimelineItem key='origin'>
           <TimelineSeparator>
             <TimelineConnector />
@@ -132,11 +109,6 @@ export const DestinationSelector = () => {
         gap={1}
         pl={1}
       >
-        {/* {error?.message && (
-          <Box color={theme.palette.error.main}>
-            {error.message}
-          </Box>
-        )} */}
         <IconButton onClick={onClickAddDestination}>
           <PlusIcon style={{ fill: theme.palette.primary.main }} />
         </IconButton>

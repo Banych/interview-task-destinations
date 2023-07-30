@@ -7,8 +7,11 @@ import { SearchFormModel } from "../../models/searchForm"
 import { SearchForm } from "../SearchForm"
 import { SearchFormSchema } from "../../models/searchFormSchema";
 
+import { useSearchParams } from "react-router-dom";
+
 export const HomePage = () => {
   const navigate = useNavigate();
+  const [ searchParams, setSearchParams ] = useSearchParams();
   const form = useForm<SearchFormModel>({
     defaultValues: {
       date: new Date().toISOString(),
@@ -21,6 +24,7 @@ export const HomePage = () => {
     criteriaMode: 'all'
   })
   const { handleSubmit } = form;
+
 
   const onHandleSubmit = handleSubmit((value) => {
     console.log(value);
