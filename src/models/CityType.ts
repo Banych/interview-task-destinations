@@ -3,8 +3,3 @@ export type CityType = {
   lat: number;
   lon: number;
 }
-
-// import { InferType } from "yup";
-// import { CitySchema } from "./searchFormSchema";
-
-// export type CityType = InferType<typeof CitySchema>;

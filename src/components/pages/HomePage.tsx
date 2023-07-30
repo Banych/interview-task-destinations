@@ -9,12 +9,12 @@ import { SearchFormSchema } from "../../models/searchFormSchema";
 export const HomePage = () => {
   const form = useForm<SearchFormModel>({
     defaultValues: {
-      // date: new Date(),
-      // passengers: 2,
+      date: new Date(),
+      passengers: 2,
       origin: {},
       destinations: [ {} ]
     },
-    // resolver: yupResolver<SearchFormModel>(SearchFormSchema),
+    resolver: yupResolver<SearchFormModel>(SearchFormSchema),
     mode: 'all',
     criteriaMode: 'all'
   })
