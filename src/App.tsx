@@ -44,7 +44,16 @@ function App() {
             <Card
             >
               <CardContent>
-                <Box py={4} px={8}>
+                <Box
+                  py={4}
+                  px={8}
+                  sx={(theme) => ({
+                    [ theme.breakpoints.down('md') ]: {
+                      paddingY: 2,
+                      paddingX: 4,
+                    }
+                  })}
+                >
                   <RouterProvider router={router} />
                 </Box>
               </CardContent>
@@ -52,7 +61,7 @@ function App() {
           </Grid>
         </Grid>
       </Box>
-    </Box>
+    </Box >
 
   );
 }

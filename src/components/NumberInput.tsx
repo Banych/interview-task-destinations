@@ -41,9 +41,13 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(({
       label='Passengers'
       type='number'
       sx={{
-        [ `&.${textFieldClasses.root} input[type=number]` ]: {
-          textAlign: 'center',
-        }
+        [ `&.${textFieldClasses.root}` ]: {
+          minWidth: 150,
+          maxWidth: 250,
+          '& input[type=number]': {
+            textAlign: 'center',
+          }
+        },
       }}
       InputProps={{
         startAdornment: (
