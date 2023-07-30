@@ -14,6 +14,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(({
     <DatePicker
       {...props}
       ref={ref}
+      disablePast
       slotProps={{
         textField: {
           ...textFieldProps,

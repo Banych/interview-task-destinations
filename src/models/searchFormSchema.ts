@@ -18,10 +18,18 @@ export const SearchFormSchema = object().shape({
           : schema.notRequired()
       )))
     .min(1, 'Minimum one destination city should present')
-    .required(),
+    .required('City of destination must be filled in'),
   passengers: number()
+    .typeError('Must be a number')
     .min(1)
-    .required(),
-  date: date()
-    .required()
+    .max(30)
+    .required('Number of passengers must be filled in'),
+  date: string()
+    .test('is-in-future', 'Date must be in the future', (value) => {
+      if (!value) return false;
+      const now = new Date();
+      const date = new Date(value);
+      return date > now;
+    })
+    .required('Date must be filled in')
 });

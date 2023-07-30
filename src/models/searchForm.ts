@@ -4,5 +4,5 @@ export type SearchFormModel = {
   origin: CityType;
   destinations: Partial<CityType>[];
   passengers: number;
-  date: Date;
+  date: string;
 }

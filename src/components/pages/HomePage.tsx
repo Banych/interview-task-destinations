@@ -9,7 +9,7 @@ import { SearchFormSchema } from "../../models/searchFormSchema";
 export const HomePage = () => {
   const form = useForm<SearchFormModel>({
     defaultValues: {
-      date: new Date(),
+      date: new Date().toISOString(),
       passengers: 2,
       origin: {},
       destinations: [ {} ]
@@ -31,6 +31,7 @@ export const HomePage = () => {
           <Box width='100%'>
             <SearchForm />
           </Box>
+          {JSON.stringify(form.formState.errors)}
           <Button
             type='submit'
           // disabled={!form.formState.isValid}

@@ -1,7 +1,8 @@
 import React from 'react'
 import { Box, Grid, useTheme } from "@mui/material"
+import { Controller, useFormContext } from "react-hook-form";
+import { isValid } from "date-fns";
 import { NumberInput } from "./NumberInput"
-import { Controller, useFormContext } from "react-hook-form"
 import { SearchFormModel } from "../models/searchForm"
 import { Calendar } from "./Calendar"
 
@@ -38,10 +39,13 @@ export const OtherSearchParams = () => {
         <Controller
           name='date'
           control={control}
-          render={({ field, fieldState: { invalid, error } }) => (
+          render={({ field: { value, onChange }, fieldState: { invalid, error } }) => (
             <Calendar
-              {...field}
               label='Date'
+              value={new Date(value)}
+              onChange={(date) => {
+                onChange(date && isValid(date) ? date.toISOString() : '')
+              }}
               textFieldProps={{
                 error: invalid,
                 helperText: error?.message,
