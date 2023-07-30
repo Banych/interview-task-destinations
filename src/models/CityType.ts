@@ -1,10 +1,10 @@
-// export type CityType = {
-//   name: string;
-//   lat: number;
-//   lon: number;
-// }
+export type CityType = {
+  name: string;
+  lat: number;
+  lon: number;
+}
 
-import { InferType } from "yup";
-import { CitySchema } from "./searchFormValidationModel";
+// import { InferType } from "yup";
+// import { CitySchema } from "./searchFormSchema";
 
-export type CityType = InferType<typeof CitySchema>;
+// export type CityType = InferType<typeof CitySchema>;

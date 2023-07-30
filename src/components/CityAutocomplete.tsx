@@ -5,9 +5,9 @@ import fakeApi from "../fakeApi";
 import { debounce } from "lodash";
 
 type CityAutocompleteProps = Omit<TextFieldProps, 'defaultValue' | 'value'> & {
-  defaultValue?: CityType | null;
-  value?: CityType | null;
-  onItemChange?: (item: CityType | null) => void;
+  defaultValue?: Partial<CityType>;
+  value?: Partial<CityType>;
+  onItemChange?: (item: Partial<CityType> | null) => void;
 }
 
 export const CityAutocomplete: React.FC<CityAutocompleteProps> = ({
@@ -23,7 +23,7 @@ export const CityAutocomplete: React.FC<CityAutocompleteProps> = ({
   const [ items, setItems ] = useState<CityType[]>([]);
   const [ isLoading, setIsLoading ] = useState(true);
 
-  const onChange = useCallback((event: React.SyntheticEvent<Element, Event>, value: CityType | string | null) => {
+  const onChange = useCallback((event: React.SyntheticEvent<Element, Event>, value: Partial<CityType> | string | null) => {
     onItemChange && typeof value !== 'string' && onItemChange(value)
   }, [ onItemChange ]);
 

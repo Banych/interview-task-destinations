@@ -22,16 +22,15 @@ export const DestinationSelector = () => {
     control,
   });
 
-  const { fieldState: { error } } = useController({ control, name: 'destinations' })
+  // const { fieldState: { error } } = useController({ control, name: 'destinations' })
 
   const onClickAddDestination = useCallback(() => {
-    append({ lat: 0, lon: 0, name: '' })
+    append({});
   }, [ append ]);
 
-  const onClickRemoveDestination = useCallback(
-    (index: number) => () => remove(index),
-    [ remove ]
-  );
+  const onClickRemoveDestination = useCallback((index: number) => {
+    remove(index);
+  }, [ remove ]);
 
   return (
     <Box display='flex' flexDirection='column'>
@@ -110,7 +109,7 @@ export const DestinationSelector = () => {
                   )}
                 />
                 <Tooltip title='Remove destination'>
-                  <IconButton onClick={onClickRemoveDestination(index)}>
+                  <IconButton onClick={() => onClickRemoveDestination(index)}>
                     <RemoveIcon />
                   </IconButton>
                 </Tooltip>
@@ -126,11 +125,11 @@ export const DestinationSelector = () => {
         gap={1}
         pl={1}
       >
-        {error?.message && (
+        {/* {error?.message && (
           <Box color={theme.palette.error.main}>
             {error.message}
           </Box>
-        )}
+        )} */}
         <IconButton onClick={onClickAddDestination}>
           <PlusIcon style={{ fill: theme.palette.primary.main }} />
         </IconButton>
@@ -138,6 +137,6 @@ export const DestinationSelector = () => {
           Add destination
         </Button>
       </Box>
-    </Box>
+    </Box >
   )
 }

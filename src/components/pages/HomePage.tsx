@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 import { SearchFormModel } from "../../models/searchForm"
 import { SearchForm } from "../SearchForm"
-import { SearchFormSchema } from "../../models/searchFormValidationModel";
+import { SearchFormSchema } from "../../models/searchFormSchema";
 
 export const HomePage = () => {
   const form = useForm<SearchFormModel>({
@@ -14,7 +14,7 @@ export const HomePage = () => {
       origin: {},
       destinations: [ {} ]
     },
-    resolver: yupResolver(SearchFormSchema),
+    // resolver: yupResolver<SearchFormModel>(SearchFormSchema),
     mode: 'all',
     criteriaMode: 'all'
   })
