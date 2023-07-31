@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/interview-task-destinations/static/css/main.729822d1.css",
-    "main.js": "/interview-task-destinations/static/js/main.0467f7ca.js",
+    "main.js": "/interview-task-destinations/static/js/main.de316a92.js",
     "static/js/787.52493fbf.chunk.js": "/interview-task-destinations/static/js/787.52493fbf.chunk.js",
     "static/media/bg.svg": "/interview-task-destinations/static/media/bg.62900ff2b7228c4ba57cafdb46dd6b52.svg",
     "index.html": "/interview-task-destinations/index.html",
     "main.729822d1.css.map": "/interview-task-destinations/static/css/main.729822d1.css.map",
-    "main.0467f7ca.js.map": "/interview-task-destinations/static/js/main.0467f7ca.js.map",
+    "main.de316a92.js.map": "/interview-task-destinations/static/js/main.de316a92.js.map",
     "787.52493fbf.chunk.js.map": "/interview-task-destinations/static/js/787.52493fbf.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.729822d1.css",
-    "static/js/main.0467f7ca.js"
+    "static/js/main.de316a92.js"
   ]
 }
