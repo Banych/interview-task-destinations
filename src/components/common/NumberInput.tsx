@@ -41,7 +41,6 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(({
       sx={{
         [ `&.${textFieldClasses.root}` ]: {
           minWidth: 150,
-          maxWidth: 250,
           '& input[type=number]': {
             textAlign: 'center',
           }

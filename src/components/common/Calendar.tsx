@@ -15,13 +15,12 @@ const Calendar = forwardRef<HTMLDivElement, CalendarProps>(({
       {...props}
       ref={ref}
       disablePast
-
       slotProps={{
         textField: {
           ...textFieldProps,
+          fullWidth: true,
           sx: {
             [ `&.${textFieldClasses.root}` ]: {
-              maxWidth: 250,
               minWidth: 150,
               '& input': {
                 textAlign: 'center',

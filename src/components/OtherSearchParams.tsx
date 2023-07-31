@@ -22,7 +22,7 @@ export const OtherSearchParams = () => {
         },
       })}
     >
-      <Grid item xs={6} md={12}>
+      <Grid item xs={12} sm={6} md={12}>
         <Controller
           name='passengers'
           control={control}
@@ -36,7 +36,7 @@ export const OtherSearchParams = () => {
           )}
         />
       </Grid>
-      <Grid item xs={6} md={12}>
+      <Grid item xs={12} sm={6} md={12}>
         <Controller
           name='date'
           control={control}
