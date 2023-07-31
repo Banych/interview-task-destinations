@@ -1,5 +1,8 @@
 # The interview task
 
+## HashRouter
+Since GitHub Pages does not support browser history, I was employing a HashRouter. Existing path does not assist GitHub Pages in determining where to direct the user (since it is a frontend route).
+
 ## The Task
 Imagine you've been hired to write an app that will allow people to perform searches to know the distance of a route that may consist of 2 or more cities, to enable them to plan their travel.
 
