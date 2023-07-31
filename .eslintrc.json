@@ -21,7 +21,6 @@
       "single"
     ]
   },
-  // exclude node_modules and build folder from eslint settings
   "ignorePatterns": [
     "node_modules/*",
     "build/*"
