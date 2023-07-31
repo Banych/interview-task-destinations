@@ -3,7 +3,7 @@ import { Typography } from "@mui/material"
 import { useSearchParams } from "react-router-dom";
 import { DeepPartial } from "react-hook-form"
 
-import { fetch, fetchCitiesByNames } from "../../fakeApi";
+import { fetch } from "../../fakeApi";
 import { SearchFormModel } from "../../models/searchForm"
 import { SearchView } from "../SearchView";
 
@@ -19,7 +19,9 @@ export const HomePage = () => {
     const passengers = searchParams.get('passengers');
 
     const originPromise = originName ? fetch(originName) : Promise.resolve([]);
-    const destinationsPromise = destinations && destinations.length > 0 ? fetchCitiesByNames(destinations) : Promise.resolve([]);
+    const destinationsPromise = destinations && destinations.length > 0
+      ? Promise.all(destinations.map((destination) => fetch(destination)))
+      : Promise.resolve([]);
     const datePromise = date ? Promise.resolve(date) : Promise.resolve(undefined);
     const passengersPromise = passengers && !isNaN(Number(passengers))
       ? Promise.resolve(Number(passengers))
@@ -32,17 +34,20 @@ export const HomePage = () => {
       passengersPromise,
     ])
       .then(([ origin, destinations, date, passengers ]) => {
-        const values: DeepPartial<SearchFormModel> = {};
+        const values: Partial<SearchFormModel> = {};
         if (origin.status === 'fulfilled') {
           values.origin = origin.value[ 0 ];
         }
-        if (destinations.status === 'fulfilled') {
-          values.destinations = destinations.value;
+        if (destinations.status === 'fulfilled' && destinations.value.length > 0) {
+          values.destinations = [];
+          destinations.value.forEach((destination, index) => {
+            values.destinations!.push(destination[ 0 ]);
+          });
         }
-        if (date.status === 'fulfilled') {
+        if (date.status === 'fulfilled' && date.value) {
           values.date = date.value;
         }
-        if (passengers.status === 'fulfilled') {
+        if (passengers.status === 'fulfilled' && passengers.value) {
           values.passengers = passengers.value;
         }
         setDefaultValues(values);

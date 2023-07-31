@@ -1,5 +1,8 @@
 import data from "./data"
 import { CityType } from "../models/CityType";
+import { calculateDistanceBetweenCities } from "../utils";
+
+const duration = 500;
 
 export const fetch = (search: string) =>
   new Promise<CityType[]>((res, rej) => {
@@ -28,29 +31,12 @@ export const fetch = (search: string) =>
       } else {
         res(cities);
       }
-    }, 500)
+    }, duration)
   });
 
-export const fetchCitiesByNames = (names: string[]) =>
-  new Promise<CityType[]>((res) => {
+export const calculateDistances = (cities: CityType[]) =>
+  new Promise<ReturnType<typeof calculateDistanceBetweenCities>>((res, rej) => {
     setTimeout(() => {
-      let cities: CityType[] = [];
-      names.forEach((name) => {
-        const city = data.find((city =>
-          city[ 0 ]
-            .toLowerCase()
-            .includes(
-              name.toLowerCase()
-            )
-        ))
-        if (city) {
-          cities.push({
-            lat: city[ 1 ],
-            lon: city[ 2 ],
-            name: city[ 0 ]
-          })
-        }
-      })
-      res(cities);
-    }, 500)
-  });
+      res(calculateDistanceBetweenCities(cities));
+    }, duration);
+  })
