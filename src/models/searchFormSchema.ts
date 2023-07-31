@@ -22,7 +22,7 @@ export const SearchFormSchema = object().shape({
     .required('Must be filled in'),
   passengers: number()
     .typeError('Must be a number')
-    .min(0)
+    .min(1, 'Must be at least 1')
     .max(30)
     .required('Must be filled in'),
   date: string()
