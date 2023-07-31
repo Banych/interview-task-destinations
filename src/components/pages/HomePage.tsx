@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
-import { Typography } from "@mui/material"
-import { useSearchParams } from "react-router-dom";
-import { DeepPartial } from "react-hook-form"
+import React, { useEffect, useState } from 'react';
+import { Typography } from '@mui/material'
+import { useSearchParams } from 'react-router-dom';
+import { DeepPartial } from 'react-hook-form'
 
-import { fetch } from "../../fakeApi";
-import { SearchFormModel } from "../../models/searchForm"
-import { SearchView } from "../SearchView";
+import { fetch } from '../../fakeApi';
+import { SearchFormModel } from '../../models/searchForm'
+import { SearchView } from '../SearchView';
 
 export const HomePage = () => {
   const [ searchParams ] = useSearchParams();
@@ -20,7 +20,7 @@ export const HomePage = () => {
 
     const originPromise = originName ? fetch(originName) : Promise.resolve([]);
     const destinationsPromise = destinations && destinations.length > 0
-      ? Promise.all(destinations.map((destination) => !!destination ? fetch(destination) : Promise.resolve([])))
+      ? Promise.all(destinations.map((destination) => destination ? fetch(destination) : Promise.resolve([])))
       : Promise.resolve([]);
     const datePromise = date ? Promise.resolve(date) : Promise.resolve(undefined);
     const passengersPromise = passengers && !isNaN(Number(passengers))
@@ -41,7 +41,7 @@ export const HomePage = () => {
         if (destinations.status === 'fulfilled' && destinations.value.length > 0) {
           values.destinations = [];
           console.log(destinations.value)
-          destinations.value.forEach((destination, index) => {
+          destinations.value.forEach((destination) => {
             values.destinations!.push(destination[ 0 ]);
           });
         }

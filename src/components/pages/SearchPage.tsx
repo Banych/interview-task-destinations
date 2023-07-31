@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useMemo } from 'react'
-import { Box, Button, Typography, useTheme } from "@mui/material";
-import { useSearchParams } from "react-router-dom";
-import { useNavigate } from "react-router";
-import { format } from "date-fns";
+import { Box, Button, Typography, useTheme } from '@mui/material';
+import { useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router';
+import { format } from 'date-fns';
 
-import { calculateDistances, fetch } from "../../fakeApi";
-import { CityType } from "../../models/CityType";
-import { CalculatedDestinations } from "../CalculatedDestinations";
-import { TextLine } from "../common/TextLine";
-import { CalculationResultsType } from "../../models/CalculationResults";
+import { calculateDistances, fetch } from '../../fakeApi';
+import { CityType } from '../../models/CityType';
+import { CalculatedDestinations } from '../CalculatedDestinations';
+import { TextLine } from '../common/TextLine';
+import { CalculationResultsType } from '../../models/CalculationResults';
 
 export const SearchPage = () => {
   const theme = useTheme();

@@ -1,6 +1,6 @@
-import data from "./data"
-import { CityType } from "../models/CityType";
-import { calculateDistanceBetweenCities } from "../utils";
+import data from './data'
+import { CityType } from '../models/CityType';
+import { calculateDistanceBetweenCities } from '../utils';
 
 const duration = 500;
 
@@ -35,7 +35,7 @@ export const fetch = (search: string) =>
   });
 
 export const calculateDistances = (cities: CityType[]) =>
-  new Promise<ReturnType<typeof calculateDistanceBetweenCities>>((res, rej) => {
+  new Promise<ReturnType<typeof calculateDistanceBetweenCities>>((res) => {
     setTimeout(() => {
       res(calculateDistanceBetweenCities(cities));
     }, duration);

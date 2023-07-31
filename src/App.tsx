@@ -1,8 +1,9 @@
-import { Box, Card, CardContent, Grid } from "@mui/material";
-import { RouterProvider } from "react-router-dom";
+import React from 'react';
+import { Box, Card, CardContent, Grid } from '@mui/material';
+import { RouterProvider } from 'react-router-dom';
 
 import { ReactComponent as BG } from './assets/svg/bg.svg';
-import router from "./router";
+import router from './router';
 
 function App() {
 

@@ -1,19 +1,17 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { Autocomplete, Skeleton, TextField, TextFieldProps } from "@mui/material"
-import { debounce } from "lodash";
+import { Autocomplete, Skeleton, TextField, TextFieldProps } from '@mui/material'
+import { debounce } from 'lodash';
 
-import { fetch } from "../fakeApi";
-import { CityType } from "../models/CityType"
+import { fetch } from '../fakeApi';
+import { CityType } from '../models/CityType'
 
-type CityAutocompleteProps = Omit<TextFieldProps, 'defaultValue' | 'value'> & {
-  defaultValue?: Partial<CityType>;
+type CityAutocompleteProps = Omit<TextFieldProps, 'value'> & {
   value?: Partial<CityType>;
   onItemChange?: (item: Partial<CityType> | null) => void;
 }
 
 export const CityAutocomplete: React.FC<CityAutocompleteProps> = ({
   onItemChange,
-  defaultValue,
   value,
   label,
   error,

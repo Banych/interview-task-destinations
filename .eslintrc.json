@@ -1,0 +1,34 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint",
+    "react-hooks"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended"
+  ],
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "rules": {
+    "quotes": [
+      "error",
+      "single"
+    ]
+  },
+  // exclude node_modules and build folder from eslint settings
+  "ignorePatterns": [
+    "node_modules/*",
+    "build/*"
+  ],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
+}

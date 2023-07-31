@@ -1,13 +1,13 @@
 import React from 'react'
-import { Box, Button } from "@mui/material";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useNavigate } from "react-router";
-import { useSearchParams } from "react-router-dom";
-import { DeepPartial, FormProvider, useForm } from "react-hook-form";
+import { Box, Button } from '@mui/material';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useNavigate } from 'react-router';
+import { useSearchParams } from 'react-router-dom';
+import { DeepPartial, FormProvider, useForm } from 'react-hook-form';
 
-import { SearchFormSchema } from "../models/searchFormSchema";
-import { SearchForm } from "./SearchForm";
-import { SearchFormModel } from "../models/searchForm";
+import { SearchFormSchema } from '../models/searchFormSchema';
+import { SearchForm } from './SearchForm';
+import { SearchFormModel } from '../models/searchForm';
 
 type SearchViewProps = {
   defaultValues?: DeepPartial<SearchFormModel>;
@@ -37,7 +37,7 @@ export const SearchView: React.FC<SearchViewProps> = ({
       params.append('originName', origin.name);
     }
     if (destinations && destinations.length > 0) {
-      let destinationsArray: string[] = [];
+      const destinationsArray: string[] = [];
       destinations.forEach((destination) => {
         if (destination?.name) {
           destinationsArray.push(destination.name);
@@ -58,8 +58,8 @@ export const SearchView: React.FC<SearchViewProps> = ({
   const onHandleSubmit = handleSubmit((value) => {
     const params = new URLSearchParams();
     params.append('originName', value.origin.name);
-    let destinations: string[] = [];
-    value.destinations.forEach((destination, index) => {
+    const destinations: string[] = [];
+    value.destinations.forEach((destination) => {
       if (destination.name) {
         destinations.push(destination.name);
       }

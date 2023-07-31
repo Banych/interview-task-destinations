@@ -1,4 +1,4 @@
-import { CityType } from "./CityType";
+import { CityType } from './CityType';
 
 export type CalculationResultsType = {
   distanceToNextCity: number;

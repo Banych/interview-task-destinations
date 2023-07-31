@@ -1,7 +1,8 @@
+import React from 'react';
 import { Grid } from '@mui/material';
 
-import { DestinationSelector } from "./DestinationSelector";
-import { OtherSearchParams } from "./OtherSearchParams";
+import { DestinationSelector } from './DestinationSelector';
+import { OtherSearchParams } from './OtherSearchParams';
 
 export const SearchForm = () => {
   return (

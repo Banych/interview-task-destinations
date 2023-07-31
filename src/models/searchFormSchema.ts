@@ -1,5 +1,5 @@
 import { object, array, number, string } from 'yup';
-import { startOfDay } from "date-fns";
+import { startOfDay } from 'date-fns';
 
 export const SearchFormSchema = object().shape({
   origin: object().shape({

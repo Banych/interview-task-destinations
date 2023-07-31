@@ -1,11 +1,11 @@
 import React, { forwardRef, useCallback } from 'react'
-import { TextField, IconButton, TextFieldProps, textFieldClasses } from "@mui/material"
+import { TextField, IconButton, TextFieldProps, textFieldClasses } from '@mui/material'
 import MinusIcon from '@mui/icons-material/Remove';
 import PlusIcon from '@mui/icons-material/Add';
 
 type NumberInputProps = TextFieldProps;
 
-export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(({
+const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(({
   ...props
 }, ref) => {
   const { onChange } = props;
@@ -67,4 +67,10 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(({
       }}
     />
   )
-})
+});
+
+NumberInput.displayName = 'NumberInput';
+
+export {
+  NumberInput
+}

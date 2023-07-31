@@ -1,7 +1,7 @@
-import { ClassValue, clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
-import { CityType } from "./models/CityType";
-import { CalculationResultsType } from "./models/CalculationResults";
+import { ClassValue, clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+import { CityType } from './models/CityType';
+import { CalculationResultsType } from './models/CalculationResults';
 
 export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 

@@ -1,14 +1,16 @@
-import { createHashRouter } from "react-router-dom";
-import { HomePage } from "../components/pages/HomePage";
-import { SearchPage } from "../components/pages/SearchPage";
+import React from 'react';
+import { createHashRouter } from 'react-router-dom';
+import { HomePage } from '../components/pages/HomePage';
+import { SearchPage } from '../components/pages/SearchPage';
+
 
 const router = createHashRouter([
   {
-    path: "/",
+    path: '/',
     element: <HomePage />
   },
   {
-    path: "/search",
+    path: '/search',
     element: <SearchPage />
   }
 ]);

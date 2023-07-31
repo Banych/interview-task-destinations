@@ -1,15 +1,15 @@
-import { useCallback } from 'react'
-import { TimelineItem, TimelineSeparator, TimelineConnector, TimelineContent } from "@mui/lab";
-import { Box, Tooltip, IconButton, Button, useTheme } from "@mui/material";
-import { useFormContext, useFieldArray, Controller } from "react-hook-form";
+import React, { useCallback } from 'react'
+import { TimelineItem, TimelineSeparator, TimelineConnector, TimelineContent } from '@mui/lab';
+import { Box, Tooltip, IconButton, Button, useTheme } from '@mui/material';
+import { useFormContext, useFieldArray, Controller } from 'react-hook-form';
 import PlaceIcon from '@mui/icons-material/Place';
 import CircleIcon from '@mui/icons-material/CircleOutlined';
 import PlusIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import RemoveIcon from '@mui/icons-material/CancelOutlined';
 
-import { SearchFormModel } from "../models/searchForm";
-import { CityAutocomplete } from "./CityAutocomplete";
-import { Timeline } from "./common/Timeline";
+import { SearchFormModel } from '../models/searchForm';
+import { CityAutocomplete } from './CityAutocomplete';
+import { Timeline } from './common/Timeline';
 
 export const DestinationSelector = () => {
   const theme = useTheme();

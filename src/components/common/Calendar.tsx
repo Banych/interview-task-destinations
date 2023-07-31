@@ -1,12 +1,12 @@
 import React, { forwardRef } from 'react'
-import { DatePicker, DatePickerProps } from "@mui/x-date-pickers"
-import { TextFieldProps, textFieldClasses } from "@mui/material"
+import { DatePicker, DatePickerProps } from '@mui/x-date-pickers'
+import { TextFieldProps, textFieldClasses } from '@mui/material'
 
 type CalendarProps = DatePickerProps<Date> & {
   textFieldProps?: TextFieldProps;
 }
 
-export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(({
+const Calendar = forwardRef<HTMLDivElement, CalendarProps>(({
   textFieldProps,
   ...props
 }, ref) => {
@@ -34,3 +34,9 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(({
     />
   )
 })
+
+Calendar.displayName = 'Calendar';
+
+export {
+  Calendar
+}
