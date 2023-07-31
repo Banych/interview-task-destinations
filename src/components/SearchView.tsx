@@ -73,12 +73,13 @@ export const SearchView: React.FC<SearchViewProps> = ({
   return (
     <FormProvider {...form}>
       <form onSubmit={onHandleSubmit}>
-        <Box display='flex' flexDirection='column' alignItems='center'>
+        <Box display='flex' flexDirection='column' alignItems='center' gap={2}>
           <Box width='100%'>
             <SearchForm />
           </Box>
           <Button
             type='submit'
+            variant='contained'
             disabled={!form.formState.isValid}
           >
             Submit

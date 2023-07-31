@@ -51,7 +51,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(({
         startAdornment: (
           <IconButton
             onClick={onClickMinus}
-            disabled={Number(props.value) === 1}
+            disabled={Number(props.value) === 0}
           >
             <MinusIcon />
           </IconButton>
